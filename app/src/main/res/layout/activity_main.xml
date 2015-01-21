@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}"
 
-    android:orientation="vertical" android:weightSum="1">
+    android:orientation="vertical" android:weightSum="1" android:background="@drawable/colorful_triangles_background">
         <!--android:background="@drawable/colorful_triangles_background" -->
 
     <TextView
