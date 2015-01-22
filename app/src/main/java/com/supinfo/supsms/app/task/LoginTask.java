@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.supinfo.supsms.app.callback.LoginCallback;
 
+import com.supinfo.supsms.app.models.User;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -12,6 +13,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -67,6 +69,14 @@ public class LoginTask extends AsyncTask<Void, Void, Void> {
 
             HttpResponse reponse = httpClient.execute(post) ;
             result = EntityUtils.toString( reponse.getEntity());
+
+            JSONObject lJson = new JSONObject(result);
+            JSONObject lJson2 = new JSONObject(lJson.getString("user"));
+
+            User lUser = User.convertToUser(lJson2);
+
+            Thread.sleep(1000);
+
 
         }catch (Exception e)
         {
