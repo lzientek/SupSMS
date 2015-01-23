@@ -68,4 +68,5 @@
             android:layout_marginTop="25dp"
             android:background="#c8ffffff"
             android:textColor="#ff1a1a1a"/>
+
 </LinearLayout>

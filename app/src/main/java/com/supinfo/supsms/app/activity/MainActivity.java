@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import com.supinfo.supsms.app.R;
@@ -16,6 +18,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     EditText et_login ;
     EditText et_password ;
     Button btn_login ;
+    private Animation animFadeIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         btn_login.setOnClickListener(this);
 
+        animFadeIn = AnimationUtils.loadAnimation(this, R.anim.anim_fade_in);
+
+        et_login.startAnimation(animFadeIn);
+        et_password.startAnimation(animFadeIn);
+        btn_login.startAnimation(animFadeIn);
     }
 
     @Override
