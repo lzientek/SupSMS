@@ -20,13 +20,15 @@ import java.util.List;
 public class BackupSmsTask extends AsyncTask<Void, Void, Void> {
 
     private RequestCallback requestCallback;
-    private List<Sms> smsList;
+    private List<Sms> smsListInbox;
+    private List<Sms> smsListSent;
     private Boolean isSuccess;
     private User user;
 
-    public BackupSmsTask(User user, List<Sms> smsList,RequestCallback requestCallback) {
+    public BackupSmsTask(User user, List<Sms> smsListInbox , List<Sms> smsListSent,RequestCallback requestCallback) {
         this.requestCallback = requestCallback;
-        this.smsList = smsList;
+        this.smsListInbox = smsListInbox;
+        this.smsListSent = smsListSent;
         isSuccess = false;
         this.user = user;
     }
@@ -47,6 +49,13 @@ public class BackupSmsTask extends AsyncTask<Void, Void, Void> {
 
 
     public void SmsPostRequest() {
+
+        isSuccess = SentPostRequest(smsListSent) && InboxPostRequest(smsListInbox);
+
+    }
+
+    private boolean SentPostRequest(List<Sms> pListOfSms)
+    {
         try {
             URI uri = new URI("http://91.121.105.200/API/");
 
@@ -54,12 +63,10 @@ public class BackupSmsTask extends AsyncTask<Void, Void, Void> {
             lListOfInformations.add(new BasicNameValuePair("action", "backupsms"));
             lListOfInformations.add(new BasicNameValuePair("login", user.getUsername()));
             lListOfInformations.add(new BasicNameValuePair("password", user.getPassword()));
-
-            //todo: voire comment gérer ca
-            lListOfInformations.add(new BasicNameValuePair("box", "inbox"));
             lListOfInformations.add(new BasicNameValuePair("box", "sent"));
-            //ajouter la list de sms
-             //todo : convertir les sms en Json
+            String JsonSmsString = Sms.convertToJsonString(pListOfSms);
+            lListOfInformations.add(new BasicNameValuePair("sms", JsonSmsString));
+
             //create a post client
             PostClient postClient = new PostClient(uri, lListOfInformations);
 
@@ -70,6 +77,35 @@ public class BackupSmsTask extends AsyncTask<Void, Void, Void> {
         } catch (Exception e) {
             Log.d("Tag", e.getMessage());
         }
+
+        return false;
+    }
+
+    private boolean InboxPostRequest(List<Sms> pListOfSms)
+    {
+        try {
+            URI uri = new URI("http://91.121.105.200/API/");
+
+            List<BasicNameValuePair> lListOfInformations = new ArrayList<BasicNameValuePair>(3);
+            lListOfInformations.add(new BasicNameValuePair("action", "backupsms"));
+            lListOfInformations.add(new BasicNameValuePair("login", user.getUsername()));
+            lListOfInformations.add(new BasicNameValuePair("password", user.getPassword()));
+            lListOfInformations.add(new BasicNameValuePair("box", "inbox"));
+            String JsonSmsString = Sms.convertToJsonString(pListOfSms);
+            lListOfInformations.add(new BasicNameValuePair("sms", JsonSmsString));
+
+            //create a post client
+            PostClient postClient = new PostClient(uri, lListOfInformations);
+
+            //get request result as JsonObject
+            JSONObject lJson = postClient.getResultAsJsonObject();
+            isSuccess = lJson.getBoolean("success");
+
+        } catch (Exception e) {
+            Log.d("Tag", e.getMessage());
+        }
+
+        return false;
     }
 
 

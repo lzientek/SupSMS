@@ -1,10 +1,29 @@
 package com.supinfo.supsms.app.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Contact implements Serializable {
     private String lastName,firstName,phone;
     private int _id;
+
+    public static JSONObject convertToJson(List<Contact> pListContact){
+
+        JSONObject lJson = new JSONObject();
+
+        try {
+            lJson.put("contact", pListContact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return lJson;
+
+    }
+
 
     public String getLastName() {
         return lastName;

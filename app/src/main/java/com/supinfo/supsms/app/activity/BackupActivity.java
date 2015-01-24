@@ -3,6 +3,8 @@ package com.supinfo.supsms.app.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,8 @@ import com.supinfo.supsms.app.models.User;
 import com.supinfo.supsms.app.task.BackupContactTask;
 import com.supinfo.supsms.app.task.BackupSmsTask;
 
+import java.security.Timestamp;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -63,18 +67,76 @@ public class BackupActivity extends Activity implements View.OnClickListener {
             }).execute();
         } else if (view == btn_backup_sms) {
             //todo: BackupSmsTask call
-            ArrayList<Sms> test = new ArrayList<Sms>();
-            Sms testSms = new Sms();
-            testSms.set_id(1);
-            testSms.setAddress("+337726QF");
-            testSms.setThread_id(1);
-            testSms.setBody("bonjour");
-            testSms.setBox("sent");
-            testSms.setDate((new Date()).getTime());
-            test.add(testSms);
-            test.add(testSms);
-            test.add(testSms);
-            new BackupSmsTask(user, test, new RequestCallback() {
+            ArrayList<Sms> lListOfSmsInbox = new ArrayList<Sms>();
+            ArrayList<Sms> lListOfSmsSent = new ArrayList<Sms>();
+
+            // partie message envoyer
+
+            Cursor cursor = getContentResolver().query(Uri.parse("content://sms/sent"), null, null, null, null);
+            cursor.moveToFirst();
+
+            try {
+                do{
+                    Sms lSms = new Sms();
+                    try {
+
+                        lSms.set_id( Integer.parseInt(cursor.getString(0)));
+                        lSms.setThread_id(Integer.parseInt(cursor.getString(1)));
+                        lSms.setAddress(cursor.getString(2));
+                        lSms.setDate(Long.parseLong(cursor.getString(4)));
+                        lSms.setBody(cursor.getString(12));
+                        lSms.setBox("sent");
+                    }catch (Exception ex)
+                    {
+
+                    }
+                    //pour test
+//                String msgData ="";
+//                for(int idx=0;idx<cursor.getColumnCount();idx++)
+//                {
+//                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx) + "  :: id="+idx;
+//                }
+                    lListOfSmsSent.add(lSms);
+                }while(cursor.moveToNext());
+            }catch (Exception e)
+            {
+
+            }
+
+            // partie message recus
+
+            cursor = getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
+            cursor.moveToFirst();
+
+            try {
+
+            }catch (Exception e)
+            {
+                do{
+                    Sms lSms = new Sms();
+                    try {
+
+                        lSms.set_id( Integer.parseInt(cursor.getString(0)));
+                        lSms.setThread_id(Integer.parseInt(cursor.getString(1)));
+                        lSms.setAddress(cursor.getString(2));
+                        lSms.setDate(Long.parseLong(cursor.getString(4)));
+                        lSms.setBody(cursor.getString(12));
+                        lSms.setBox("inbox");
+                    }catch (Exception ex)
+                    {
+
+                    }
+                    //pour test
+//                String msgData ="";
+//                for(int idx=0;idx<cursor.getColumnCount();idx++)
+//                {
+//                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx) + "  :: id="+idx;
+//                }
+                    lListOfSmsInbox.add(lSms);
+                }while(cursor.moveToNext());
+            }
+
+            new BackupSmsTask(user,lListOfSmsInbox,lListOfSmsSent, new RequestCallback() {
                 @Override
                 public void callback(Boolean isSuccess) {
                       Boolean is = isSuccess;
