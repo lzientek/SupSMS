@@ -2,9 +2,13 @@
 <resources>
 
     <string name="app_name">SupSMS</string>
-    <string name="hello_world">Hello world!</string>
     <string name="login_user_text">Username :</string>
     <string name="password_text">Password :</string>
     <string name="login_text">Login</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="sync_contact_btn_text">Back up contacts</string>
+    <string name="sync_sms_btn_text">Back up sms</string>
+    <string name="logout_btn_text">Logout</string>
 
 </resources>
