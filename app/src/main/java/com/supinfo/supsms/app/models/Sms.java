@@ -1,29 +1,25 @@
 package com.supinfo.supsms.app.models;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.net.Uri;
+import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Objects;
 
 public class Sms implements Serializable {
-    private String body,box,address;
+    private String body, box, address;
     private long date;
     private int _id;
     private int thread_id;
 
-    public static String convertToJsonString (List<Sms> pListSms){
+    public static String convertToJsonString(List<Sms> pListSms) {
 
         JSONArray lListOfJson = new JSONArray();
 
-        for (Sms lSms : pListSms)
-        {
+        for (Sms lSms : pListSms) {
             lListOfJson.put(Sms.convertSmsToJson(lSms));
         }
 
@@ -31,7 +27,7 @@ public class Sms implements Serializable {
 
         try {
             lJson.put("SMS", lListOfJson);
-            return lJson.toString() ;
+            return lJson.toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -41,17 +37,23 @@ public class Sms implements Serializable {
     }
 
 
-    public static JSONObject convertSmsToJson(Sms lSms){
+    public static JSONObject convertSmsToJson(Sms lSms) {
         JSONObject lJson = new JSONObject();
 
         try {
-           //todo : lJson.put("body",lSms.getBody());
-            lJson.put("address",lSms.getAddress());
-            lJson.put("box",lSms.getBox());
-            lJson.put("_id",lSms.get_id());
-            lJson.put("thread_id",lSms.getThread_id());
-            lJson.put("date",lSms.getDate());
+            String body64 = lSms.getBody();
+            byte[] byteArray = body64.getBytes("UTF-8");
+
+            String newBody = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            lJson.put("body", newBody);
+            lJson.put("address", lSms.getAddress());
+            lJson.put("box", lSms.getBox());
+            lJson.put("_id", lSms.get_id());
+            lJson.put("thread_id", lSms.getThread_id());
+            lJson.put("date", lSms.getDate());
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
