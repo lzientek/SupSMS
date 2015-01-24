@@ -2,10 +2,10 @@ package com.supinfo.supsms.app.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,8 +15,6 @@ import com.supinfo.supsms.app.R;
 import com.supinfo.supsms.app.callback.LoginCallback;
 import com.supinfo.supsms.app.models.User;
 import com.supinfo.supsms.app.task.LoginTask;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -75,6 +73,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     editor.commit();
 
                     GoToBackupPage(pUser);
+                    //navigue vers la page 2
                 }
 
             }
