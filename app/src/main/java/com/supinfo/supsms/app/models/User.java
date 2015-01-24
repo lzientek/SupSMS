@@ -44,6 +44,30 @@ public class User implements Serializable {
     }
 
 
+    public static JSONObject convertToJson(User pUser){
+
+        JSONObject lJson = new JSONObject();
+
+        try {
+            lJson.put("id",pUser.getId());
+            lJson.put("username",pUser.getAddress());
+            lJson.put("password",pUser.getPassword());
+            lJson.put("phone",pUser.getPhone());
+            lJson.put("lastname",pUser.getLastname());
+            lJson.put("firstname",pUser.getFirstname());
+            lJson.put("postalCode",pUser.getPostalCode());
+            lJson.put("address",pUser.getAddress());
+            lJson.put("email",pUser.getEmail());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return lJson;
+
+    }
+
+
 
     public int getId() {
         return id;

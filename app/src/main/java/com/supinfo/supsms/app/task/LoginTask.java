@@ -1,5 +1,6 @@
 package com.supinfo.supsms.app.task;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import android.util.Log;
@@ -28,6 +29,7 @@ public class LoginTask extends AsyncTask<Void, Void, Void> {
     private String user;
     private String password;
     private String result;
+    private User _User = null;
 
     public LoginTask(String user,String password,LoginCallback loginCallback) {
         this.loginCallback = loginCallback;
@@ -46,7 +48,7 @@ public class LoginTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        loginCallback.callback();
+        loginCallback.callback(_User);
     }
 
 
@@ -71,11 +73,13 @@ public class LoginTask extends AsyncTask<Void, Void, Void> {
             result = EntityUtils.toString( reponse.getEntity());
 
             JSONObject lJson = new JSONObject(result);
-            JSONObject lJson2 = new JSONObject(lJson.getString("user"));
+            if(lJson.getString("success").equals("true"))
+            {
+                JSONObject lJson2 = new JSONObject(lJson.getString("user"));
 
-            User lUser = User.convertToUser(lJson2);
+                _User = User.convertToUser(lJson2);
+            }
 
-            Thread.sleep(1000);
 
 
         }catch (Exception e)
