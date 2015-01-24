@@ -2,6 +2,7 @@ package com.supinfo.supsms.app.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -44,9 +45,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btn_login.startAnimation(animFadeIn);
 
         SharedPreferences lSharedPreferences = getPreferences(_Context.MODE_PRIVATE);
-        if(lSharedPreferences.getString("user",null)!=null)
+        if(lSharedPreferences.getString("user",null)!= null)
         {
-            // navigue vers la page 2
+            Intent intent = new Intent(_Context, HomeActivity.class);
+            startActivity(intent);
         }
 
 
@@ -66,8 +68,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     editor.putString("user", User.convertToJson(pUser).toString());
                     editor.commit();
 
-
-                    //navigue vers la page 2
+                    Intent intent = new Intent(_Context, HomeActivity.class);
+                    startActivity(intent);
                 }
 
             }
