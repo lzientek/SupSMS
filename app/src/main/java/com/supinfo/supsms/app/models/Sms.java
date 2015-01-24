@@ -3,6 +3,7 @@ package com.supinfo.supsms.app.models;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,18 +20,18 @@ public class Sms implements Serializable {
 
     public static String convertToJsonString (List<Sms> pListSms){
 
-        List<JSONObject> lListOfJson = new ArrayList<JSONObject>();
+        JSONArray lListOfJson = new JSONArray();
 
         for (Sms lSms : pListSms)
         {
-            lListOfJson.add(Sms.convertSmsToJson(lSms));
+            lListOfJson.put(Sms.convertSmsToJson(lSms));
         }
 
         JSONObject lJson = new JSONObject();
 
         try {
-            lJson.put("sms",lListOfJson);
-            return lJson.getString("sms") ;
+            lJson.put("SMS", lListOfJson);
+            return lJson.toString() ;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -44,10 +45,10 @@ public class Sms implements Serializable {
         JSONObject lJson = new JSONObject();
 
         try {
-            lJson.put("body",lSms.getBody());
+           //todo : lJson.put("body",lSms.getBody());
             lJson.put("address",lSms.getAddress());
             lJson.put("box",lSms.getBox());
-            lJson.put("id",lSms.get_id());
+            lJson.put("_id",lSms.get_id());
             lJson.put("thread_id",lSms.getThread_id());
             lJson.put("date",lSms.getDate());
         } catch (JSONException e) {
