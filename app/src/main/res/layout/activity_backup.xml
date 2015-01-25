@@ -7,36 +7,75 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context="com.supinfo.supsms.app.activity.BackupActivity"
-                android:background="@drawable/colorful_triangles_background" android:orientation="vertical">
+                android:background="@drawable/colorful_triangles_background"
+                android:orientation="vertical"
+                android:weightSum="1">
 
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sync_contact_btn_text"
-            android:id="@+id/btn_backup_contact"/>
+            android:id="@+id/btn_backup_contact" android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:background="#b4ffffff"
+            android:textColor="#ff1a1a1a"
+            android:padding="8dp"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sync_sms_btn_text"
-            android:id="@+id/btn_backup_sms"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/logout_btn_text"
-            android:id="@+id/btn_logout"/>
+            android:id="@+id/btn_backup_sms"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:background="#b4ffffff"
+            android:textColor="#ff1a1a1a"
+            android:padding="8dp"/>
     <ProgressBar
             style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="137dp"
+            android:layout_height="137dp"
             android:visibility="gone"
             android:id="@+id/pb_advancement"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true"/>
+    <ImageView
+            android:visibility="gone"
+            android:layout_width="137dp"
+            android:layout_height="137dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/iv_success"
+            android:src="@drawable/success"
+            android:contentDescription="@string/success"/>
+    <ImageView
+            android:visibility="gone"
+            android:layout_width="137dp"
+            android:layout_height="137dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/iv_error"
+            android:src="@drawable/error"
+            android:contentDescription="@string/error"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/tv_advancement"
             android:layout_gravity="center_horizontal"
+            android:textColor="#ffffffff"
             />
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logout_btn_text"
+                android:id="@+id/btn_logout"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="20dp"
+                android:background="#b4ffffff"
+                android:textColor="#ff1a1a1a"
+                android:padding="8dp"/>
+    </FrameLayout>
 </LinearLayout>

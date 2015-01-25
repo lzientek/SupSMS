@@ -10,13 +10,18 @@
     <string name="sync_contact_btn_text">Back up contacts</string>
     <string name="sync_sms_btn_text">Back up sms</string>
     <string name="logout_btn_text">Logout</string>
-    <string name="loading_contacts_text">Loading contacts...</string>
+    <string name="loading_contacts_text">Loading contacts…</string>
     <string name="no_contact_text">No contacts found.</string>
-    <string name="send_to_server_text">Request successful.</string>
+    <string name="sending_contact_server_text">Sending Contacts to the server…</string>
     <string name="sent_contact_text">Contacts sent!</string>
+    <string name="sent_sms_text">Sms sent!</string>
     <string name="error_sending_text">Error while sending</string>
-    <string name="sending_sms_server_text">Sending Sms to the server...</string>
-    <string name="loading_sms_text">Loading Sms...</string>
+    <string name="sending_sms_server_text">Sending Sms to the server…</string>
+    <string name="loading_sms_text">Loading Sms…</string>
     <string name="no_sms_text">No Sms found.</string>
+    <string name="success">success</string>
+    <string name="error">error</string>
+    <string name="check_connection_credentials_error_text">Check your connection or your credentials</string>
+    <string name="login_error_text">Error during login</string>
 
 </resources>
