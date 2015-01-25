@@ -1,5 +1,6 @@
 package com.supinfo.supsms.app.models;
 
+import com.supinfo.supsms.app.helpers.EncodingHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,15 +9,15 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Contact implements Serializable {
-    private String lastName,firstName,phone;
+    private String displayName, phone;
     private int _id;
 
-    public static String convertToJsonString(List<Contact> pListContact) {
+    public static String convertToJsonString(List<Contact> contacts) {
 
         JSONArray lListOfJson = new JSONArray();
 
-        for (Contact lContact : pListContact) {
-            lListOfJson.put(Contact.convertContactToJson(lContact));
+        for (Contact contact : contacts) {
+            lListOfJson.put(Contact.convertContactToJson(contact));
         }
 
         JSONObject lJson = new JSONObject();
@@ -32,17 +33,16 @@ public class Contact implements Serializable {
 
     }
 
-    public static JSONObject convertContactToJson(Contact lContact) {
+    public static JSONObject convertContactToJson(Contact contact) {
         JSONObject lJson = new JSONObject();
 
         try {
 
-            lJson.put("id",lContact.get_id());
-            lJson.put("phone",lContact.getPhone());
-            lJson.put("firstname",lContact.getFirstName());
-            lJson.put("lastname",lContact.getLastName());
+            lJson.put("_ID", contact.get_id());
+            lJson.put("PNUM", contact.getPhone());
+            lJson.put("DNAME", EncodingHelper.ToBase64(contact.getDisplayName()));
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -50,37 +50,12 @@ public class Contact implements Serializable {
 
     }
 
-
-
-//    public static JSONObject convertToJson(List<Contact> pListContact){
-//
-//        JSONObject lJson = new JSONObject();
-//
-//        try {
-//            lJson.put("contact", pListContact);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return lJson;
-//
-//    }
-
-
-    public String getLastName() {
-        return lastName;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getPhone() {

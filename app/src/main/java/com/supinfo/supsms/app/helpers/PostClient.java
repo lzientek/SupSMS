@@ -1,4 +1,4 @@
-package com.supinfo.supsms.app.requestHelper;
+package com.supinfo.supsms.app.helpers;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -21,11 +21,11 @@ public class PostClient {
     List<BasicNameValuePair> lListOfInformations;
     URI uri;
 
-    public PostClient(URI uri, List<BasicNameValuePair> lListOfInformations) throws UnsupportedEncodingException {
+    public PostClient(URI uri, List<BasicNameValuePair> listOfInformations) throws UnsupportedEncodingException {
         this.uri = uri;
         post.setURI(uri);
-        this.lListOfInformations = lListOfInformations;
-        post.setEntity(new UrlEncodedFormEntity(lListOfInformations));
+        this.lListOfInformations = listOfInformations;
+        post.setEntity(new UrlEncodedFormEntity(listOfInformations));
     }
 
     public String getResultAsString() throws IOException {
@@ -36,7 +36,6 @@ public class PostClient {
 
     public JSONObject getResultAsJsonObject() throws IOException, JSONException {
         JSONObject lJson = new JSONObject(getResultAsString());
-
         return lJson;
     }
 }

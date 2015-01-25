@@ -1,12 +1,11 @@
 package com.supinfo.supsms.app.task;
 
 import android.os.AsyncTask;
-import android.provider.Telephony;
 import android.util.Log;
 import com.supinfo.supsms.app.callback.RequestCallback;
+import com.supinfo.supsms.app.helpers.PostClient;
 import com.supinfo.supsms.app.models.Sms;
 import com.supinfo.supsms.app.models.User;
-import com.supinfo.supsms.app.requestHelper.PostClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 

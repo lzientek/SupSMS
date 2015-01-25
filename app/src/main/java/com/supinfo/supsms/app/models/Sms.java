@@ -1,6 +1,6 @@
 package com.supinfo.supsms.app.models;
 
-import android.util.Base64;
+import com.supinfo.supsms.app.helpers.EncodingHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,10 +41,7 @@ public class Sms implements Serializable {
         JSONObject lJson = new JSONObject();
 
         try {
-            String body64 = lSms.getBody();
-            byte[] byteArray = body64.getBytes("UTF-8");
-
-            String newBody = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            String newBody = EncodingHelper.ToBase64(lSms.getBody());
             lJson.put("body", newBody);
             lJson.put("address", lSms.getAddress());
             lJson.put("box", lSms.getBox());
@@ -109,4 +106,6 @@ public class Sms implements Serializable {
     public void setThread_id(int thread_id) {
         this.thread_id = thread_id;
     }
+
+
 }

@@ -25,4 +25,18 @@
             android:layout_height="wrap_content"
             android:text="@string/logout_btn_text"
             android:id="@+id/btn_logout"/>
+    <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/pb_advancement"
+            android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/tv_advancement"
+            android:layout_gravity="center_horizontal"
+            />
 </LinearLayout>
