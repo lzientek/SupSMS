@@ -56,6 +56,8 @@ public class BackupSmsTask extends AsyncTask<Void, Void, Void> {
 
     private boolean SentPostRequest(List<Sms> pListOfSms)
     {
+        boolean success = false;
+
         try {
             URI uri = new URI("http://91.121.105.200/API/");
 
@@ -73,17 +75,19 @@ public class BackupSmsTask extends AsyncTask<Void, Void, Void> {
 
             //get request result as JsonObject
             JSONObject lJson = postClient.getResultAsJsonObject();
-            return lJson.getBoolean("success");
+            success = lJson.getBoolean("success");
 
         } catch (Exception e) {
             Log.d("Tag", e.getMessage());
         }
 
-        return false;
+        return success;
     }
 
     private boolean InboxPostRequest(List<Sms> pListOfSms)
     {
+        boolean success = false;
+
         try {
             URI uri = new URI("http://91.121.105.200/API/");
 
@@ -100,13 +104,13 @@ public class BackupSmsTask extends AsyncTask<Void, Void, Void> {
 
             //get request result as JsonObject
             JSONObject lJson = postClient.getResultAsJsonObject();
-            return lJson.getBoolean("success");
+            success = lJson.getBoolean("success");
 
         } catch (Exception e) {
             Log.d("Tag", e.getMessage());
         }
 
-        return false;
+        return success;
     }
 
 

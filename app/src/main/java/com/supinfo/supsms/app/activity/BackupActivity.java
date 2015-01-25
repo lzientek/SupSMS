@@ -1,11 +1,13 @@
 package com.supinfo.supsms.app.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import com.supinfo.supsms.app.R;
@@ -52,13 +54,44 @@ public class BackupActivity extends Activity implements View.OnClickListener {
         if (view == btn_backup_contact) {
             //todo: BackupContactTask call
             ArrayList<Contact> contacts = new ArrayList<Contact>();
-            Contact contact = new Contact();
-            contact.set_id(1);
-            contact.setFirstName("lucas");
-            contact.setLastName("zientek");
-            contact.setPhone("+33 7789557566");
-            contacts.add(contact);
-            contacts.add(contact);
+
+            ContentResolver cr = getContentResolver();
+            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null);
+            if (cur.getCount() > 0) {
+                while (cur.moveToNext()) {
+
+                    Contact lContact = new Contact();
+
+                    lContact.set_id(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID))));
+                    lContact.setFirstName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)));
+                    lContact.setLastName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+
+                    if (Integer.parseInt(cur.getString(
+                            cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                        Cursor pCur = cr.query(
+                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                null,
+                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+                                new String[]{cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID))}, null);
+                        while (pCur.moveToNext()) {
+
+                            lContact.setPhone(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                        }
+                        pCur.close();
+                    }
+
+                    contacts.add(lContact);
+
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
             new BackupContactTask(user, contacts, new RequestCallback() {
                 @Override
                 public void callback(Boolean isSuccess) {
