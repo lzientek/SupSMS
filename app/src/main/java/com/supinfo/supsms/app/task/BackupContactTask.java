@@ -55,8 +55,8 @@ public class BackupContactTask extends AsyncTask<Void, Void, Void> {
             lListOfInformations.add(new BasicNameValuePair("login", user.getUsername()));
             lListOfInformations.add(new BasicNameValuePair("password", user.getPassword()));
 
-             //todo :convertir e json la liste
-            String contactJsonStr = null;
+
+            String contactJsonStr =  Contact.convertToJsonString(contacts);
             lListOfInformations.add(new BasicNameValuePair("contacts", contactJsonStr));
 
             //create a post client
